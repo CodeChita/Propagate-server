@@ -8,6 +8,10 @@ npm-debug.log
 .env
 
 package-lock.json
+<<<<<<< HEAD
 
 
 .vscode
+=======
+package-lock.json
+>>>>>>> george
