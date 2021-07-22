@@ -2,16 +2,16 @@ const { Schema, model } = require("mongoose");
 const Plant = require("./Plant.model");
 
 const userSchema = new Schema({
-  username: {
-		type: String,
-	},
-	firstName: String,
-	lastName: String,
   email: {
     type: String,
     unique: true
   },
-  password: String,
+	firstName: String,
+	lastName: String,
+	googleId: String,
+  
+  nickname: String,
+  passwordHash: String,
   profileImageUrl: String,
   city: String,
   about: String,
@@ -20,8 +20,6 @@ const userSchema = new Schema({
     ref: Plant
   }
 });
-
-
 
 const User = model("User", userSchema);
 

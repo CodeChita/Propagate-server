@@ -110,8 +110,6 @@ router.post('/logout', (req, res) => {
     res.status(204).json({});
 })
 
-<<<<<<< HEAD
-=======
 // GOOGLE SIGN-UP //
 router.post("/google/info", (req, res, next) => {
     const {firstName, lastName, email, image, googleId} = req.body
@@ -134,7 +132,8 @@ router.post("/google/info", (req, res, next) => {
 
 // SIGN-IN //
 router.get('/signin', (req, res, next) => {
->>>>>>> 3f184b2b3558373c45e53472b0b1ce79c1f8979a
+    //renders the sign-in page 
+})
 
 // middleware to check if user is loggedIn
 const isLoggedIn = (req, res, next) => {  
