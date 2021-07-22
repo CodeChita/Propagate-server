@@ -15,4 +15,4 @@ const plantSchema = new Schema({
 
 const Plant = model("Plant", plantSchema);
 
-module.exports = User;
+module.exports = Plant;
