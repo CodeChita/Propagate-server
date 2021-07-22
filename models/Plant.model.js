@@ -9,7 +9,7 @@ const plantSchema = new Schema({
   location: String,
   plantImageUrl: String,
   user: {
-    type: Schema.Types.ObjectId
+    type: Schema.Types.ObjectId,
     ref: User
   }
 });
