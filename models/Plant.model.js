@@ -7,6 +7,7 @@ const plantSchema = new Schema({
   scientificName: String,
   commonName: [String],
   location: String,
+  plantImageUrl: String,
   user: {
     type: Schema.Types.ObjectId
     ref: User
