@@ -43,11 +43,11 @@ app.use("/api", allRoutes);
 const userRoutes = require("./routes/user.routes")
 app.use("/api", userRoutes)
 
-// const authRoutes = require("./routes/auth.routes")
-// app.user("/api", authRoutes)
+const authRoutes = require("./routes/auth.routes")
+app.use("/api", authRoutes)
 
- const apiRoutes = require("./routes/api.routes")
- app.use("/api", apiRoutes)
+//  const apiRoutes = require("./routes/api.routes")
+//  app.use("/api", apiRoutes)
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);

@@ -10,7 +10,7 @@ const plantSchema = new Schema({
   plantImageUrl: String,
   user: {
     type: Schema.Types.ObjectId,
-    ref: User
+    ref: 'User'
   }
 });
 

@@ -5,12 +5,12 @@ const UserModel = require('../models/User.model');
 
 router.post('/signup', async (req, res) => {
     try {
-    const {nickname, email, password } = req.body;
-    console.log(nickname, email, password);
+    const {username, email, password } = req.body;
+    console.log(email, password);
  
     // -----SERVER SIDE VALIDATION ----------
     
-    if (!nickname || !email || !password) {
+    if (!username || !email || !password) {
         res.status(500)
           .json({
             errorMessage: 'Please enter nickname, email and password'
@@ -33,9 +33,9 @@ router.post('/signup', async (req, res) => {
     }
 
     //creating password hash
-    let salt = await bcrypt.genSalt(10);
-    let hash = awaitbcrypt.hash(password, salt);
-    let user = await UserModel.create({nickname, email, passwordHash: hash})
+    let salt = bcrypt.genSaltSync(10);
+    let hash = bcrypt.hashSync(password, salt);
+    let user = await UserModel.create({username, email, passwordHash: hash})
         user.passwordHash = "***";
         res.status(200).json(user);
     
