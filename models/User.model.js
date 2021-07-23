@@ -10,7 +10,7 @@ const userSchema = new Schema({
 	lastName: String,
 	googleId: String,
   
-  nickname: String,
+  username: String,
   passwordHash: String,
   profileImageUrl: String,
   city: String,
