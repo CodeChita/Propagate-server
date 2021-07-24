@@ -33,8 +33,8 @@ router.post('/signup', async (req, res) => {
     }
 
     //creating password hash
-    let salt = bcrypt.genSaltSync(10);
-    let hash = bcrypt.hashSync(password, salt);
+    let salt = await bcrypt.genSalt(10);
+    let hash = await bcrypt.hash(password, salt);
     let user = await UserModel.create({username, email, passwordHash: hash})
         user.passwordHash = "***";
         res.status(200).json(user);
@@ -42,13 +42,13 @@ router.post('/signup', async (req, res) => {
     }
     catch(err) {
         if (err.code === 11000) {
-          res.status(500).json({
+          res.status(200).json({
             errorMessage: 'email entered already exists!',
             message: err,
           });
         } 
         else {
-          res.status(500).json({
+          res.status(200).json({
             errorMessage: 'Something went wrong!',
             message: err,
           });
@@ -87,14 +87,14 @@ router.post('/signin', async (req, res, next) => {
             }
                 //if passwords do not match
             else {
-                    res.status(500).json({ error: 'Passwords don\'t match'})
+                    res.status(200).json({ error: 'Passwords don\'t match'})
                     return; 
             }
     }
       
       //throw an error if the sign-in fails. 
     catch(err) {
-        res.status(500).json({
+        res.status(200).json({
             error: 'Sign-In Failed!',
             message: err
         })
@@ -129,11 +129,5 @@ router.post("/google/info", (req, res, next) => {
       res.status(500).json({error: `${error}`})
     }
   });
-  
-
-// SIGN-IN //
-router.get('/signin', (req, res, next) => {
-    //renders the sign-in page 
-})
 
 module.exports = router;

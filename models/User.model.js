@@ -15,10 +15,7 @@ const userSchema = new Schema({
   profileImageUrl: String,
   city: String,
   about: String,
-  plantsOffered: {
-    type: [Schema.Types.ObjectId],
-    ref: Plant
-  }
+  plantsOffered: [{type: Schema.Types.ObjectId, ref: 'Plant'}]
 });
 
 const User = model("User", userSchema);

@@ -23,11 +23,18 @@ router.get("/user", isLoggedIn, (req, res, next) => {
   res.status(200).json(req.session.loggedInUser);
 });
 
-router.get("/user/profile", isLoggedIn, async (req, res, next) => {
-  const user = req.session.loggedInUser
-  const userData = await UserModel.findOne(user.email).populate
+router.get("/user/profile", /*isLoggedIn, */ async (req, res, next) => {
+  const userData = await UserModel.findOne({email: "george.ds.brooks@gmail.com"}).populate()
   console.log(userData)
 
 });
+
+router.patch("/user/plant/:plant_id", async (req, res, next) => {
+  const {plant_id} = req.params
+  const updatedPlant = req.body
+  c
+  const response = await PlantModel.findByIdAndUpdate(plant_id, {available: updatedPlant.available})
+  console.log(response)
+})
 
 module.exports = router;
