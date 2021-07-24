@@ -11,7 +11,7 @@ router.post('/signup', async (req, res) => {
     // -----SERVER SIDE VALIDATION ----------
     
     if (!username || !email || !password) {
-        res.status(500)
+        res.status(200)
           .json({
             errorMessage: 'Please enter nickname, email and password'
           });
@@ -19,15 +19,15 @@ router.post('/signup', async (req, res) => {
     }
     const myRegex = new RegExp(/^[a-z0-9](?!.*?[^\na-z0-9]{2})[^\s@]+@[^\s@]+\.[^\s@]+[a-z0-9]$/);
     if (!myRegex.test(email)) {
-        res.status(500).json({
+        res.status(200).json({
           errorMessage: 'Email format not correct'
         });
         return;  
     }
     const myPassRegex = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/);
     if (!myPassRegex.test(password)) {
-      res.status(500).json({
-        errorMessage: 'Password needs to have 8 characters, a number and an Uppercase alphabet'
+      res.status(200).json({
+        errorMessage: 'Password needs to have 8 characters, a number and Uppercase alphabet and a special character!'
       });
       return;  
     }
@@ -135,26 +135,5 @@ router.post("/google/info", (req, res, next) => {
 router.get('/signin', (req, res, next) => {
     //renders the sign-in page 
 })
-
-// middleware to check if user is loggedIn
-const isLoggedIn = (req, res, next) => {  
-  if (req.session.loggedInUser) {
-      //calls whatever is to be executed after the isLoggedIn function is over
-      next()
-  }
-  else {
-      res.status(401).json({
-          message: 'Unauthorized user',
-          code: 401,
-      })
-  };
-};
-
-
-// THIS IS A PROTECTED ROUTE
-// will handle all get requests to http:localhost:5005/api/user
-router.get("/user", isLoggedIn, (req, res, next) => {
-  res.status(200).json(req.session.loggedInUser);
-});
 
 module.exports = router;
