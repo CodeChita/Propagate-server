@@ -10,7 +10,7 @@ const isLoggedIn = (req, res, next) => {
   }
   else {
       res.status(401).json({
-          message: 'Unauthorized user',
+          errorMessage: 'Unauthorized user',
           code: 401,
       })
   };
@@ -19,15 +19,15 @@ const isLoggedIn = (req, res, next) => {
 
 // THIS IS A PROTECTED ROUTE
 // will handle all get requests to http:localhost:5005/api/user
-router.get("/user", isLoggedIn, (req, res, next) => {
-  res.status(200).json(req.session.loggedInUser);
+router.get("/user", isLoggedIn, async (req, res, next) => {
+  const {_id: userId} = req.session.loggedInUser
+  let userData = await UserModel.findById(userId).populate()
+  userData.passwordHash = "***"
+  req.session.loggedInUser = userData
+  console.log('userData', userData)
+  res.status(200).json(userData);
 });
 
-router.get("/user/profile", /*isLoggedIn, */ async (req, res, next) => {
-  const userData = await UserModel.findOne({email: "george.ds.brooks@gmail.com"}).populate()
-  console.log(userData)
-
-});
 
 router.patch("/user/plant/:plant_id", async (req, res, next) => {
   const {plant_id} = req.params
