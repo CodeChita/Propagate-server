@@ -58,9 +58,8 @@ router.post('/signup', async (req, res) => {
  
 // will handle all POST requests to http:localhost:5005/api/signin
 router.post('/signin', async (req, res, next) => {
-    const { email, password } = req.body;
-    // -----SERVER SIDE VALIDATION ----------
-    
+    const {email, password} = req.body;
+
     if ( !email || !password) {
         res.status(500).json({
             error: 'Please enter email and password',
@@ -78,12 +77,14 @@ router.post('/signin', async (req, res, next) => {
     try {
     // Find if the user exists in the database 
         const userData = await UserModel.findOne({email})
+  
     //check if passwords match
         const doesItMatch = await bcrypt.compare(password, userData.passwordHash)
             if (doesItMatch) {
                 userData.passwordHash = "***";
                 req.session.loggedInUser = userData;
                 res.status(200).json(userData)
+                console.log("check")
             }
                 //if passwords do not match
             else {
