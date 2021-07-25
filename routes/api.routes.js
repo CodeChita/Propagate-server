@@ -22,10 +22,3 @@ router.post('/profile/upload', uploader.single("imageUrl"), (req, res, next) => 
     // You will get the image url in 'req.file.path'
     // Your code to store your url in your database should be here
 module.exports = router;
-
-router.post('/plant/create', async (req, res, next) => {
-    const newPlant = req.body
-    console.log(newPlant)
-    response = await PlantModel.create({newPlant})
-    console.log(response)
-})
