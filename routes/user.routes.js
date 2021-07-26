@@ -37,4 +37,10 @@ router.patch("/user/plant/:plant_id", async (req, res, next) => {
   res.status(200).json(response)
 })
 
+router.patch("/user/profile", async (req,res,next) => {
+  const {_id: userId, about, username, email} = req.body.user
+  const editedUser = {about: about, username: username, email: email}
+  let response = await UserModel.findByIdAndUpdate(userId, editedUser, {new: true})
+  res.status(200).json(response)
+})
 module.exports = router;
