@@ -21,7 +21,7 @@ const isLoggedIn = (req, res, next) => {
 // will handle all get requests to http:localhost:5005/api/user
 router.get("/user", isLoggedIn, async (req, res, next) => {
   const {_id: userId} = req.session.loggedInUser
-  let userData = await UserModel.findById(userId).populate()
+  let userData = await UserModel.findById(userId).populate('plantsOffered')
   userData.passwordHash = "***"
   req.session.loggedInUser = userData
   console.log('userData', userData)
@@ -30,11 +30,11 @@ router.get("/user", isLoggedIn, async (req, res, next) => {
 
 
 router.patch("/user/plant/:plant_id", async (req, res, next) => {
+  console.log('params:', req.params, 'body', req.body)
   const {plant_id} = req.params
-  const updatedPlant = req.body
-  c
-  const response = await PlantModel.findByIdAndUpdate(plant_id, {available: updatedPlant.available})
-  console.log(response)
+  const updatedPlant = req.body.plant
+  const response = await PlantModel.findByIdAndUpdate(plant_id, updatedPlant, {new: true})
+  res.status(200).json(response)
 })
 
 module.exports = router;

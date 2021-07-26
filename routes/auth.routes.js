@@ -13,7 +13,7 @@ router.post('/signup', async (req, res) => {
     if (!username || !email || !password) {
         res.status(200)
           .json({
-            errorMessage: 'Please enter nickname, email and password'
+            errorMessage: 'Please enter username, email and password'
           });
         return;  
     }

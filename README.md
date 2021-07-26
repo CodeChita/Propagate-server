@@ -12,7 +12,7 @@ Made by [George Brooks](https://github.com/gdsbrooks) and [Codechita](https://gi
 - **logout** - As a user I want to be able to log out from the webpage so that I can make sure no one will access my account.
 - **Private landing page** - After your logged in you get acces to the complete map function and navigation.
 - **Private profile** - On the private profile there is a list of the propagations the user listed. The ability to edit your profile.
-- **Edit profile** - The user is able to edit their picture, nickname, about me, email. Also the user will be able to delete the whole profile here. 
+- **Edit profile** - The user is able to edit their picture, username, about me, email. Also the user will be able to delete the whole profile here. 
 - **Public profile** - Other users will able to see the name of the user the profile picture, the small bio and all the listings the user offers.
 - **Map search** - The user is able to fill in a city and check which listings are offert.
 - **Plant search** - The user will be able to write the common plant name and get a list of offers (sorted accordently to distance).
