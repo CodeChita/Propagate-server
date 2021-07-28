@@ -3,7 +3,6 @@ const UserModel = require("../models/User.model")
 const PlantModel = require("../models/Plant.model")
 const axios = require('axios');
 
-
 // CLOUDINARY ROUTES //
 
 const uploader = require('../config/cloudinary.config');
@@ -51,4 +50,7 @@ router.post('/plant/upload',uploader.single("imageUrl"), async (req, res, next) 
 
 // You will get the image url in 'req.file.path'
 // Your code to store your url in your database should be here
+
+
+
 module.exports = router;

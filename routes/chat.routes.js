@@ -2,7 +2,7 @@ const router = require("express").Router();
 const Conversation = require('../models/Conversation.model')
 const Message = require('../models/Message.model')
 
-router.get('/chats', (req, res, next) => {
+router.get('/user/chats', (req, res, next) => {
   const {_id: myUserId} = req.body.user
 })
 // A route to return the converstaion id between two participants if it already exists

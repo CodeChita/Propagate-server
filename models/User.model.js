@@ -14,13 +14,15 @@ const userSchema = new Schema({
   username: String,
   passwordHash: String,
   profileImageUrl: String,
-  city: String,
+  city: {
+    type: String,
+    default: 'Amsterdam'
+  },
   about: {
     type: String,
-    default: null,
-    required: true
+    default: null
   },
-  plantsOffered: [{type: Schema.Types.ObjectId, ref: 'Plant'}]
+  plantsOffered: [{type: Schema.Types.ObjectId, ref: 'Plant', default: null}]
 });
 
 const User = model("User", userSchema);

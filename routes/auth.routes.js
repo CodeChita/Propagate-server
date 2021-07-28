@@ -6,12 +6,12 @@ const UserModel = require('../models/User.model');
 router.post('/signup', async (req, res) => {
     try {
     const {username, email, password } = req.body;
-    console.log(email, password);
+    console.log(username, email, password);
  
     // -----SERVER SIDE VALIDATION ----------
     
     if (!username || !email || !password) {
-        res.status(200)
+        res.status(601)
           .json({
             errorMessage: 'Please enter username, email and password'
           });
@@ -19,14 +19,14 @@ router.post('/signup', async (req, res) => {
     }
     const myRegex = new RegExp(/^[a-z0-9](?!.*?[^\na-z0-9]{2})[^\s@]+@[^\s@]+\.[^\s@]+[a-z0-9]$/);
     if (!myRegex.test(email)) {
-        res.status(200).json({
+        res.status(602).json({
           errorMessage: 'Email format not correct'
         });
         return;  
     }
     const myPassRegex = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/);
     if (!myPassRegex.test(password)) {
-      res.status(200).json({
+      res.status(603).json({
         errorMessage: 'Password needs to have 8 characters, a number and Uppercase alphabet and a special character!'
       });
       return;  
@@ -37,18 +37,18 @@ router.post('/signup', async (req, res) => {
     let hash = await bcrypt.hash(password, salt);
     let user = await UserModel.create({username, email, passwordHash: hash})
         user.passwordHash = "***";
-        res.status(200).json(user);
+        res.status(201).json(user);
     
     }
     catch(err) {
         if (err.code === 11000) {
-          res.status(200).json({
+          res.status(604).json({
             errorMessage: 'email entered already exists!',
             message: err,
           });
         } 
         else {
-          res.status(200).json({
+          res.status(605).json({
             errorMessage: 'Something went wrong!',
             message: err,
           });
@@ -61,14 +61,14 @@ router.post('/signin', async (req, res, next) => {
     const {email, password} = req.body;
 
     if ( !email || !password) {
-        res.status(500).json({
+        res.status(204).json({
             error: 'Please enter email and password',
        })
       return;  
     }
     const myRegex = new RegExp(/^[a-z0-9](?!.*?[^\na-z0-9]{2})[^\s@]+@[^\s@]+\.[^\s@]+[a-z0-9]$/);
     if (!myRegex.test(email)) {
-        res.status(500).json({
+        res.status(204).json({
             error: 'Email format not correct',
         })
         return;  
@@ -88,14 +88,14 @@ router.post('/signin', async (req, res, next) => {
             }
                 //if passwords do not match
             else {
-                    res.status(200).json({ error: 'Passwords don\'t match'})
+                    res.status(204).json({ error: 'Passwords don\'t match'})
                     return; 
             }
     }
       
       //throw an error if the sign-in fails. 
     catch(err) {
-        res.status(200).json({
+        res.status(204).json({
             error: 'Sign-In Failed!',
             message: err
         })
