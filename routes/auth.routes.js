@@ -6,49 +6,49 @@ const UserModel = require('../models/User.model');
 router.post('/signup', async (req, res) => {
     try {
     const {username, email, password } = req.body;
-    console.log(email, password);
+    console.log(username, email, password);
  
     // -----SERVER SIDE VALIDATION ----------
     
     if (!username || !email || !password) {
-        res.status(500)
+        res.status(601)
           .json({
-            errorMessage: 'Please enter nickname, email and password'
+            errorMessage: 'Please enter username, email and password'
           });
         return;  
     }
     const myRegex = new RegExp(/^[a-z0-9](?!.*?[^\na-z0-9]{2})[^\s@]+@[^\s@]+\.[^\s@]+[a-z0-9]$/);
     if (!myRegex.test(email)) {
-        res.status(500).json({
+        res.status(602).json({
           errorMessage: 'Email format not correct'
         });
         return;  
     }
     const myPassRegex = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/);
     if (!myPassRegex.test(password)) {
-      res.status(500).json({
-        errorMessage: 'Password needs to have 8 characters, a number and an Uppercase alphabet'
+      res.status(603).json({
+        errorMessage: 'Password needs to have 8 characters, a number and Uppercase alphabet and a special character!'
       });
       return;  
     }
 
     //creating password hash
-    let salt = bcrypt.genSaltSync(10);
-    let hash = bcrypt.hashSync(password, salt);
+    let salt = await bcrypt.genSalt(10);
+    let hash = await bcrypt.hash(password, salt);
     let user = await UserModel.create({username, email, passwordHash: hash})
         user.passwordHash = "***";
-        res.status(200).json(user);
+        res.status(201).json(user);
     
     }
     catch(err) {
         if (err.code === 11000) {
-          res.status(500).json({
+          res.status(604).json({
             errorMessage: 'email entered already exists!',
             message: err,
           });
         } 
         else {
-          res.status(500).json({
+          res.status(605).json({
             errorMessage: 'Something went wrong!',
             message: err,
           });
@@ -61,14 +61,14 @@ router.post('/signin', async (req, res, next) => {
     const {email, password} = req.body;
 
     if ( !email || !password) {
-        res.status(500).json({
+        res.status(204).json({
             error: 'Please enter email and password',
        })
       return;  
     }
     const myRegex = new RegExp(/^[a-z0-9](?!.*?[^\na-z0-9]{2})[^\s@]+@[^\s@]+\.[^\s@]+[a-z0-9]$/);
     if (!myRegex.test(email)) {
-        res.status(500).json({
+        res.status(204).json({
             error: 'Email format not correct',
         })
         return;  
@@ -88,14 +88,14 @@ router.post('/signin', async (req, res, next) => {
             }
                 //if passwords do not match
             else {
-                    res.status(500).json({ error: 'Passwords don\'t match'})
+                    res.status(204).json({ error: 'Passwords don\'t match'})
                     return; 
             }
     }
       
       //throw an error if the sign-in fails. 
     catch(err) {
-        res.status(500).json({
+        res.status(204).json({
             error: 'Sign-In Failed!',
             message: err
         })
@@ -130,32 +130,5 @@ router.post("/google/info", (req, res, next) => {
       res.status(500).json({error: `${error}`})
     }
   });
-  
-
-// SIGN-IN //
-router.get('/signin', (req, res, next) => {
-    //renders the sign-in page 
-})
-
-// middleware to check if user is loggedIn
-const isLoggedIn = (req, res, next) => {  
-  if (req.session.loggedInUser) {
-      //calls whatever is to be executed after the isLoggedIn function is over
-      next()
-  }
-  else {
-      res.status(401).json({
-          message: 'Unauthorized user',
-          code: 401,
-      })
-  };
-};
-
-
-// THIS IS A PROTECTED ROUTE
-// will handle all get requests to http:localhost:5005/api/user
-router.get("/user", isLoggedIn, (req, res, next) => {
-  res.status(200).json(req.session.loggedInUser);
-});
 
 module.exports = router;

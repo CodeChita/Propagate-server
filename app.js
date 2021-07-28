@@ -49,6 +49,9 @@ app.use("/api", authRoutes)
  const apiRoutes = require("./routes/api.routes")
  app.use("/api", apiRoutes)
 
+ const chatRoutes = require("./routes/chat.routes")
+ app.use("/api/chat", chatRoutes)
+
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 

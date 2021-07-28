@@ -6,6 +6,10 @@ const plantSchema = new Schema({
   displayName: String,
   scientificName: String,
   commonName: [String],
+  available: {
+    type: Boolean,
+    default: true
+  },
   location: String,
   plantImageUrl: String,
   user: {

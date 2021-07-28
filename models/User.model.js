@@ -4,7 +4,8 @@ const Plant = require("./Plant.model");
 const userSchema = new Schema({
   email: {
     type: String,
-    unique: true
+    unique: true,
+    required: true
   },
 	firstName: String,
 	lastName: String,
@@ -13,12 +14,15 @@ const userSchema = new Schema({
   username: String,
   passwordHash: String,
   profileImageUrl: String,
-  city: String,
-  about: String,
-  plantsOffered: {
-    type: [Schema.Types.ObjectId],
-    ref: Plant
-  }
+  city: {
+    type: String,
+    default: 'Amsterdam'
+  },
+  about: {
+    type: String,
+    default: null
+  },
+  plantsOffered: [{type: Schema.Types.ObjectId, ref: 'Plant', default: null}]
 });
 
 const User = model("User", userSchema);
