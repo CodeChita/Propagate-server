@@ -11,7 +11,7 @@ router.post('/profile/upload', uploader.single("imageUrl"), (req, res, next) => 
     // the uploader.single() callback will send the file to cloudinary and get you and obj with the url in return
     const { email } = req.body
 
-    console.log('file is: ', req.file)
+    console.log('file is:', req.file)
     UserModel.findOneAndUpdate(email, { profileImageUrl: req.file.path }, { new: true })
         .then((result) => {
             console.log(result)
