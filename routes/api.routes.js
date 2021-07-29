@@ -45,6 +45,32 @@ router.post('/plant/upload', uploader.single("imageUrl"), async (req, res, next)
     };
 })
 
+router.post('/picture/upload', uploader.single("imageUrl"), async (req, res, next) => {
+    try {
+        console.log(req)
+        // const { path } = req.file
+        
+        // const { organ } = req.body
+        // const encoded = await encodeURIComponent(path);
+        // const response = await axios(`${process.env.PLANT_URL}?api-key=${process.env.PLANT_API_KEY}&images=${encoded}&organs=${organ}`)
+        // const plantData = {
+        //     plant: response.data.results[0],
+        //     picture: path
+        // }
+        // res.status(200).json(plantData);
+        // if (!req.file) {
+        //     console.log("there was an error uploading the file")
+        //     next(new Error('No file uploaded!'))
+        //     return
+        // }
+    }
+    catch (err) {
+        console.log(err)
+    };
+})
+
+
+
 ///////////////// POST INFO ADDPLANT //////////////////
 
 router.post('/plant/add', async (req, res, next) => {
