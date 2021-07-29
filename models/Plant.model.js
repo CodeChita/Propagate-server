@@ -10,7 +10,7 @@ const plantSchema = new Schema({
     type: Boolean,
     default: true
   },
-  location: String,
+  location: [Number],
   plantImageUrl: String,
   user: {
     type: Schema.Types.ObjectId,
