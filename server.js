@@ -13,8 +13,9 @@ let server = app.listen(PORT, () => {
 
 
 const io = new Server(server, {
+
   cors: {
-    origin: '*',
+    origin: '*'
   }
 });
 
@@ -39,9 +40,11 @@ io.on('connection', (socket) => {
       message: message, 
       conversationId: chatId
     }
+    console.log('newwwww', newMessage)
     // As the conversation happens, keep saving the messages in the DB
     MessageModel.create(newMessage)
-      .then(() => {
+      .then((response) => {
+        console.log('did we create?', response)
         socket.to(data.chatId).emit("receive_message", data.content);
       })
     

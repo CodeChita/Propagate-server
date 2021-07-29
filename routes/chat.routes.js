@@ -4,7 +4,6 @@ const Message = require('../models/Message.model')
 
 router.get('/user/chats', (req, res, next) => {
   const {_id: myUserId} = req.body.user
-  console.log(req.body)
 })
 // A route to return the converstaion id between two participants if it already exists
 // or create a new converstaion, when users chat for the first time
@@ -39,6 +38,7 @@ router.get('/messages/:conversationId', (req, res, next) => {
   Message.find({conversationId})
     .populate('sender')
     .then((messages) => {
+      console.log('mess', messages)
       res.status(200).json(messages)
     })
     .catch((err) => {
