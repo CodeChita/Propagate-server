@@ -84,7 +84,6 @@ router.post('/signin', async (req, res, next) => {
                 userData.passwordHash = "***";
                 req.session.loggedInUser = userData;
                 res.status(200).json(userData)
-                console.log("check")
             }
                 //if passwords do not match
             else {
