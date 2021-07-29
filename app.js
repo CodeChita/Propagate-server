@@ -33,16 +33,14 @@ app.use(session({
     })
 }));
 
-
-
 // 👇 Start handling routes here
 // Contrary to the views version, all routes are controlled from the routes/index.js
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", process.env.ORIGIN); // update to match the domain you will make the request from
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", process.env.ORIGIN); // update to match the domain you will make the request from
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 
 const allRoutes = require("./routes");
@@ -59,6 +57,7 @@ app.use("/api", authRoutes)
 
  const chatRoutes = require("./routes/chat.routes")
  app.use("/api/chat", chatRoutes)
+
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);

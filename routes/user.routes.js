@@ -68,6 +68,19 @@ router.patch("/user/profile", isLoggedIn, async (req,res,next) => {
   }
 })
 
+router.delete("/user/profile/:userId", async (req,res,next) => {
+  let {userId} = req.params
+  try {
+    console.log(userId)
+    let response = await UserModel.findByIdAndDelete(userId)
+    console.log(response)
+    res.status(200).json(response)
+  }
+  catch(err){
+    res.status(401).json(err)
+  }
+})
+
 /////////SEARCH ROUTES///////////
 
 router.get('/search', async (req, res, next) => {
