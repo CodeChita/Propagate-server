@@ -1,14 +1,14 @@
 const { Schema, model } = require("mongoose");
-require('./User.model')
+const User = require('./User.model')
 
 let ConversationSchema = new Schema({
   participants: [{
-      ref: 'user',
+      ref: 'User',
       type: Schema.Types.ObjectId
     },
   ] 
 })
 
-let ConversationModel = model('conversation', ConversationSchema)
+let ConversationModel = model('Conversation', ConversationSchema)
 
 module.exports = ConversationModel

@@ -36,11 +36,11 @@ app.use(session({
 // 👇 Start handling routes here
 // Contrary to the views version, all routes are controlled from the routes/index.js
 
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", process.env.ORIGIN); // update to match the domain you will make the request from
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", 'http://localhost:3000'); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 const path = require('path');
 app.use(express.static(path.join(__dirname, 'public')));
