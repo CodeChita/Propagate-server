@@ -4,6 +4,7 @@ const Message = require('../models/Message.model')
 
 router.get('/user/chats', (req, res, next) => {
   const {_id: myUserId} = req.body.user
+  console.log(req.body)
 })
 // A route to return the converstaion id between two participants if it already exists
 // or create a new converstaion, when users chat for the first time
@@ -16,12 +17,14 @@ router.post('/conversation', (req, res, next) => {
         if (found) {
           //Conversation between those participants already present
           res.status(200).json(found)
+          console.log('found', found)
         }
         else {
           //Create a conversation between them if not present
           Conversation.create({participants})
             .then((response) => {
               res.status(200).json(response)
+              console.log('created:', response)
             })
         }
       })
