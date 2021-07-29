@@ -33,7 +33,7 @@ const isLoggedIn = async (req, res, next) => {
 
 // THIS IS A PROTECTED ROUTE
 // will handle all get requests to http:localhost:5005/api/user
-router.get("/user", isLoggedIn, async (req, res, next) => {
+router.get("/user/whoami", isLoggedIn, async (req, res, next) => {
   const {_id: userId} = req.session.loggedInUser
   let userData = await UserModel.findById(userId).populate('plantsOffered')
   userData.passwordHash = "***"
@@ -42,15 +42,21 @@ router.get("/user", isLoggedIn, async (req, res, next) => {
   res.status(200).json(userData);
 });
 
-router.patch("/user/plant/:plant_id", async (req, res, next) => {
-  console.log('params:', req.params, 'body', req.body)
+router.get("/users/:userId", isLoggedIn, async (req, res, next) => {
+  const {userId} = req.params
+  let userData = await UserModel.findById(userId).populate('plantsOffered')
+  userData.passwordHash = "***"
+  res.status(200).json(userData);
+});
+
+router.patch("/user/plant/:plant_id", isLoggedIn, async (req, res, next) => {
   const {plant_id} = req.params
   const updatedPlant = req.body.plant
   const response = await PlantModel.findByIdAndUpdate(plant_id, updatedPlant, {new: true})
   res.status(200).json(response)
 })
 
-router.patch("/user/profile", async (req,res,next) => {
+router.patch("/user/profile", isLoggedIn, async (req,res,next) => {
   const {_id: userId, about, username, email} = req.body.user
   const editedUser = {about: about, username: username, email: email}
   try {
@@ -64,10 +70,12 @@ router.patch("/user/profile", async (req,res,next) => {
 
 /////////SEARCH ROUTES///////////
 
-router.post('/user/search', async (req, res, next) => {
-  const {searchTerm} = req.body
-  console.log(searchTerm)
-  let matchingPlants = await PlantModel.find()
+router.get('/search', async (req, res, next) => {
+  let response = await PlantModel.find({available: true}).populate('user')
+  let matchingPlants = await response.map(plant => {
+    plant.user.passwordHash = '***'
+    return plant
+  })
   console.log(matchingPlants)
   res.status(200).json(matchingPlants)
 })

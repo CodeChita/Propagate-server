@@ -35,7 +35,7 @@ router.post('/plant/upload',uploader.single("imageUrl"), async (req, res, next) 
         const encoded =  await encodeURIComponent(path);
         console.log(encoded)
 
-        const response = await axios(`${process.env.PLANT_URL}?api-key=${process.env.PLANT_API_KEY}&images=${encoded}&organs=${organ}`)
+        const response = await axios.get(`${process.env.PLANT_URL}?api-key=${process.env.PLANT_API_KEY}&images=${encoded}&organs=${organ}`, {withCredentials: true})
                 console.log(response.data.results[0])
         if (!req.file) {
             console.log("there was an error uploading the file")
