@@ -76,12 +76,12 @@ router.post('/plant/upload', uploader.single("imageUrl"), async (req, res, next)
 router.post('/plant/add', async (req, res, next) => {
 
     try {
-        const { plantImageUrl, displayName, scientificName, commonName, location } = req.body
-        let cordinate = await axios (`https://nominatim.openstreetmap.org/search.php?city=${location}&format=json&accept-language=en`)
+        const { plantImageUrl, displayName, scientificName, commonName, location, zipCode } = req.body
+        let cordinate = await axios (`https://nominatim.openstreetmap.org/search.php?postalcode=${zipCode}&format=json&accept-language=en`)
         let city = await cordinate.data[0]
         const { _id: user } = req.session.loggedInUser
         await console.log(city)
-        const result = await PlantModel.create({ plantImageUrl, displayName, scientificName, commonName, location: [+city.lat, +city.lon], user })
+        const result = await PlantModel.create({ plantImageUrl, displayName, scientificName, location, commonName, geoLocation: [+city.lat, +city.lon], user })
         await UserModel.findByIdAndUpdate(user, { $addToSet: { plantsOffered: result._id } }, { new: true })
         res.status(200).json(result);
     }
