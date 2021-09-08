@@ -23,7 +23,7 @@ module.exports = (app) => {
   app.use(
     cors({
       credentials: true,
-      origin: [propagate.gdsbrooks.com, letspropagate.herokuapp.com],
+      origin: ['http://propagate.gdsbrooks.com', 'http://letspropagate.herokuapp.com', 'https://letspropagate.herokuapp.com', 'https://propagate.gdsbrooks.com'],
     })
   );
 
